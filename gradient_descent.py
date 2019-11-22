@@ -35,9 +35,9 @@ def get_f():
 
 def gradient_descent():
     global iterations
-    step = 1000000.0 # high initial step; this is the size of the step we made
+    step = 1000000.0 # high initial step
     max_iterations = 10000
-    gamma = 0.00001 # too low gamma and it breaks
+    gamma = 0.00001 # this gamma is ok
     df = get_df() 
     a = 1 # adjust as needed; since most solutions are in the (2;3) range
     while(step > 0.000000001  and max_iterations > iterations):
