@@ -30,7 +30,7 @@ def approx_pi():
     ax2.plot(approxdata, '-b')
     #ax2.plot([it],[approximation], '-o', color = 'red')
     plt.title(' n = ' + str(n) + ' PI = {0:.16f}' .format(approximation))
-    # print( str(it) + ". n = " + str(n) + " PI = "  + str(approximation))
+  # print( str(it) + ". n = " + str(n) + " PI = "  + str(approximation))
     # print(approximation)
     # print('\n')
     it+=1
@@ -38,7 +38,7 @@ def approx_pi():
 
 def animate(i):
     framex, framey = [], []
-    for i in range(0, 100):
+    for i in range(0, 10000):
         x = rand.random()
         y = rand.random()
         framex.append(x)
