@@ -67,20 +67,3 @@ print('Found minimum loss: %s' % total_loss)
 print('For a-value: %s' % optimal_a)
 print('In %s steps'% iterations)
 
-
-
-
-# xvalues = []
-# yvalues = []
-
-# for j in np.linspace(2.1,2.2, 20000):
-#     total_loss = 0
-#     for i in range(1, samples):
-#         total_loss+=loss_function(j, i, data[i])
-#     xvalues.append(j)
-#     yvalues.append(total_loss)
-#     print(total_loss)
-
-# print(" result")
-# print(min(yvalues))
-# print(xvalues[yvalues.index(min(yvalues))])
