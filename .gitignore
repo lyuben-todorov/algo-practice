@@ -1,4 +1,4 @@
 .vscode
-./poetry.lock
+poetry.lock
 pyproject.toml
-.vscode/settings.json
+

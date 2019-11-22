@@ -13,7 +13,8 @@ import sympy as sp
 # Find the minimum value that E  attains, to three decimals accuracy behind the decimal point:  
 
 
-data = np.array([0, 5,5,6,7,11])
+data = np.array([0, 4,6,7,11,9])
+#data = np.array([0 ,5,5,6,7,11])
 
 samples = 6
 x = sp.Symbol('x')
@@ -21,44 +22,46 @@ y = sp.Symbol('y')
 a = sp.Symbol('a')
 iterations = 0
 
+
+# returns lambdified derivative of (ax−y)2⋅log((ax−y)2+1)
 def get_df():
     f = ((a * x - y) ** 2) * sp.log((a * x - y) ** 2 + 1)
     f_deriv = f.diff(a)
     f_deriv = sp.lambdify([a, x, y], f_deriv)
-    
     return f_deriv
+# returns lambdified (ax−y)2⋅log((ax−y)2+1)
 def get_f():
     return sp.lambdify([a,x,y],((a * x - y) ** 2) * sp.log((a * x - y) ** 2 + 1))
-def loss_function(a, x, y):
-    loss = ((a*x-y)**2)*np.log((a*x-y)**2 + 1)
-    return loss
+
 def gradient_descent():
-    loss = 1000000.0
-    max_iterations = 10000
-    gamma = 0.000001
-    f = get_f()
-    df = get_df()
     global iterations
-    a = 2
-    while(loss > 0.00002  and max_iterations > iterations):
-        last_a = a
-        sum_roc = 0
+    step = 1000000.0 # high initial step; this is the size of the step we made
+    max_iterations = 10000
+    gamma = 0.00001 # too low gamma and it breaks
+    df = get_df() 
+    a = 1 # adjust as needed; since most solutions are in the (2;3) range
+    while(step > 0.000000001  and max_iterations > iterations):
+        last_a = a 
+
+        sum_roc = 0 # rate of change accumulator
         for i in range(1, samples):
             roc = df(a, i, data[i]) # rate of change
             sum_roc += roc
-        sum_roc = sum_roc*gamma
-        a = last_a - sum_roc
+
+        sum_roc = sum_roc*gamma #  next_x = current_x - gamma * df(current_x)
+        a = last_a - sum_roc 
         
-        loss = abs(a-last_a)
-        print('a = %s  ---- loss = %s' % (a,loss))
+        step = abs(a-last_a) # step = next_x - current_x 
+        print('a = %s  ---- step = %s' % (a,step))
 
         iterations += 1
     return  a
 optimal_a = gradient_descent()
 
 total_loss = 0
+f = get_f()
 for i in range(1, samples):
-    total_loss+=loss_function(optimal_a, i, data[i])
+    total_loss+=f(optimal_a, i, data[i])
 
 print('Found minimum loss: %s' % total_loss)
 print('For a-value: %s' % optimal_a)
